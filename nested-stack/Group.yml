@@ -1,0 +1,16 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: Test CFN Group Stack
+
+Resources:
+  Group:
+    Type: AWS::IAM::Group
+    Properties:
+      GroupName: TestCFNGroup
+
+Outputs:
+  name:
+    Description: The group name
+    Value: !Ref "Group"
+    Export:
+      Name: "TestCFNGroupName"

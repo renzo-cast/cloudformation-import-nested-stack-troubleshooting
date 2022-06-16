@@ -1,0 +1,33 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: Test CFN Role stack which should get detached
+
+Parameters:
+  ENVIRONMENT:
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Default: "/test-cfn-stack/Environment"
+
+Resources:
+  Role:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: 'TestCFNRole'
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Tags:
+        - Key: Environment
+          Value: !Ref ENVIRONMENT
+
+Outputs:
+  name:
+    Description: The role name
+    Value: !Ref "Role"
+    Export:
+      Name: "TestCFNRoleName"

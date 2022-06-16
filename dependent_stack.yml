@@ -1,0 +1,10 @@
+---
+
+AWSTemplateFormatVersion: "2010-09-09"
+Resources:
+  MyInstanceProfile:
+    Type: "AWS::IAM::InstanceProfile"
+    Properties:
+      Path: "/"
+      Roles:
+        - !ImportValue TestCFNRoleName

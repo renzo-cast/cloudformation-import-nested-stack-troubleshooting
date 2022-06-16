@@ -1,0 +1,19 @@
+---
+
+AWSTemplateFormatVersion: "2010-09-09"
+Resources:
+  RoleParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /test-cfn-stack/CreateRole
+      Type: String
+      Value: "True"
+      Description: SSM Parameter to create Role
+
+  Environment:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /test-cfn-stack/Environment
+      Type: String
+      Value: "DEV"
+      Description: SSM Parameter for setting the Environment

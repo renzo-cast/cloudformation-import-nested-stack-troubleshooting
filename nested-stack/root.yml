@@ -1,0 +1,34 @@
+---
+
+AWSTemplateFormatVersion: 2010-09-09
+Description: Root stack for deploying the test CFN
+
+Conditions:
+  CREATEROLE: !Not [!Equals ["False", !Ref CREATEROLEPARAM]]
+
+Parameters:
+  CREATEROLEPARAM:
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Description: "If True, the template will create the role"
+    Default: "/test-cfn-stack/CreateRole"
+
+Resources:
+  Group:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://testingcfns3bucket.s3.ap-southeast-2.amazonaws.com/nested-stack/Group.yml
+
+  Policy:
+    Type: AWS::CloudFormation::Stack
+    DependsOn: Group
+    Properties:
+      TemplateURL: https://testingcfns3bucket.s3.ap-southeast-2.amazonaws.com/nested-stack/Policy.yml
+
+  Role:
+    Type: AWS::CloudFormation::Stack
+    DeletionPolicy: Retain
+    Condition: CREATEROLE
+    Properties:
+      TemplateURL: https://testingcfns3bucket.s3.ap-southeast-2.amazonaws.com/nested-stack/Role.yml
+      # Parameters:
+      #   ENVIRONMENT: "/test-cfn-stack/CreateRole"

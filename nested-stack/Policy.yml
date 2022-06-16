@@ -1,0 +1,24 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: Test CFN Policy Stack
+
+Resources:
+  Policy:
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: TestCFNPolicy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Deny
+            Action: '*'
+            Resource: '*'
+      Groups:
+      - !ImportValue  TestCFNGroupName
+
+Outputs:
+  name:
+    Description: The policy name
+    Value: !Ref "Policy"
+    Export:
+      Name: "TestCFNPolicyName"
