@@ -134,4 +134,4 @@ aws cloudformation execute-change-set \
 The detached stack should be imported back into the nested stack
 
 **Result**
-The import operation fails with
+The import operation succeeded!
